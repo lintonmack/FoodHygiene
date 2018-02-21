@@ -29,7 +29,7 @@ import java.util.List;
 public class PostcodeSearch extends AppCompatActivity {
 
     String resultSet;
-    String[] businessNames;
+    ArrayList<String> businessName;
     String[] businessAddress;
     int[] hygieneRating;
     TextView textView;
@@ -41,6 +41,7 @@ public class PostcodeSearch extends AppCompatActivity {
         setContentView(R.layout.activity_postcode_search);
         textView = (TextView) findViewById(R.id.textView2);
         restSearch = (EditText) findViewById(R.id.restSearch);
+        businessName = new ArrayList<String>();
     }
 
     public void getResults(View view){
@@ -97,6 +98,8 @@ public class PostcodeSearch extends AppCompatActivity {
                     String postCode = jsonObject.getString("PostCode");
                     String ratingValue = jsonObject.getString("RatingValue");
 
+                    businessName.add(businessN);
+
                     result = businessN + ", " + address1 + ", " + address2 + ", " + address3 + ", " +
                             postCode + ". Has a Hygiene Rating of: " + ratingValue + "\n\n";
 
@@ -104,14 +107,11 @@ public class PostcodeSearch extends AppCompatActivity {
                     textView.setText(resultSet);
 
                     Log.i("Result", result);
-
                 }
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
             Log.i("Result", result);
-
         }
     }
 }
