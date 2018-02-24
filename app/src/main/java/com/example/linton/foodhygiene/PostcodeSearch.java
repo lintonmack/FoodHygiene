@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TableLayout;
@@ -24,35 +25,35 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class PostcodeSearch extends AppCompatActivity {
 
-    String resultSet;
-    ArrayList<String> businessName;
-    String[] businessAddress;
-    int[] hygieneRating;
-    TextView textView;
+    private TableLayout tableLayout;
     EditText restSearch;
+    ListView listView;
+    Restaurant[] mRestaurants;
+    static ArrayAdapter<Restaurant> arrayAdapter;
+    static ArrayList<Restaurant> restaurantArrayList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_postcode_search);
-        textView = (TextView) findViewById(R.id.textView2);
+//        textView = (TextView) findViewById(R.id.textView2);
         restSearch = (EditText) findViewById(R.id.restSearch);
-        businessName = new ArrayList<String>();
+        listView = (ListView) findViewById(R.id.listView);
+
     }
 
-    public void getResults(View view){
+    public void getResults(View view) {
         Log.i("restSearch", restSearch.getText().toString());
         GetRating task = new GetRating();
         task.execute("http://sandbox.kriswelsh.com/hygieneapi/hygiene.php?op=s_postcode&postcode=" + restSearch.getText().toString());
-//                "LL6");
     }
 
     public class GetRating extends AsyncTask<String, Void, String> {
-
 
         @Override
         protected String doInBackground(String... urls) {
@@ -65,7 +66,7 @@ public class PostcodeSearch extends AppCompatActivity {
                 InputStream in = urlConnection.getInputStream();
                 InputStreamReader reader = new InputStreamReader(in);
                 int data = reader.read();
-                while(data!=-1){
+                while (data != -1) {
                     char current = (char) data;
                     result += current;
                     data = reader.read();
@@ -88,26 +89,36 @@ public class PostcodeSearch extends AppCompatActivity {
 //              JSONObject jsonObject = new JSONObject(result);
                 JSONArray jsonArray = new JSONArray(result);
                 JSONObject jsonObject;
-                for(int n = 0; n < jsonArray.length(); n++)
-                {
+                for (int n = 0; n < jsonArray.length(); n++) {
                     jsonObject = jsonArray.getJSONObject(n);
-                    String businessN = jsonObject.getString("BusinessName");
-                    String address1 = jsonObject.getString("AddressLine1");
-                    String address2 = jsonObject.getString("AddressLine2");
-                    String address3 = jsonObject.getString("AddressLine3");
-                    String postCode = jsonObject.getString("PostCode");
-                    String ratingValue = jsonObject.getString("RatingValue");
-
-                    businessName.add(businessN);
-
-                    result = businessN + ", " + address1 + ", " + address2 + ", " + address3 + ", " +
-                            postCode + ". Has a Hygiene Rating of: " + ratingValue + "\n\n";
-
-                    resultSet += result;
-                    textView.setText(resultSet);
-
-                    Log.i("Result", result);
+                    Restaurant RestaurantObj = new Restaurant(
+                            (jsonObject.getString("BusinessName")),
+                            (jsonObject.getString("AddressLine1")),
+                            (jsonObject.getString("AddressLine2")),
+                            (jsonObject.getString("AddressLine3")),
+                            (jsonObject.getString("PostCode")),
+                            (jsonObject.getString("RatingValue")),
+                            (jsonObject.getString("RatingDate")),
+                            (jsonObject.getString("Longitude")),
+                            (jsonObject.getString("Latitude")));
+                    restaurantArrayList.add(RestaurantObj);
+//                    mRestaurants[n] = RestaurantObj;
                 }
+
+//                RestaurantAdapter.addAll(restaurantArrayList);
+//                arrayAdapter = new RestaurantAdapter(PostcodeSearch.this, restaurantArrayList);
+//
+
+                //Working
+//                arrayAdapter = new ArrayAdapter<Restaurant>(PostcodeSearch.this, android.R.layout.simple_list_item_1, restaurantArrayList);
+//                listView.setAdapter(arrayAdapter);
+////                System.out.println("this ran");
+
+
+                RestaurantAdapter adapter = new RestaurantAdapter(PostcodeSearch.this, restaurantArrayList);
+                ListView listView = (ListView) findViewById(R.id.listView);
+                listView.setAdapter(adapter);
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }

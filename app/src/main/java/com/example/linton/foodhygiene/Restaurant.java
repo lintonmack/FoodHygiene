@@ -6,8 +6,8 @@ package com.example.linton.foodhygiene;
 
 public class Restaurant {
 
-    String id;
-    String businessName;
+//    public String id;
+    public String businessName;
     String addressLine1;
     String addressLine2;
     String addressLine3;
@@ -17,8 +17,8 @@ public class Restaurant {
     String longitude;
     String latitude;
 
-    public Restaurant(String id, String businessName, String addressLine1, String addressLine2, String addressLine3, String postCode, String ratingValue, String ratingDate, String longitude, String latitude) {
-        this.id = id;
+    public Restaurant(String businessName, String addressLine1, String addressLine2, String addressLine3, String postCode, String ratingValue, String ratingDate, String longitude, String latitude) {
+//        this.id = id;
         this.businessName = businessName;
         this.addressLine1 = addressLine1;
         this.addressLine2 = addressLine2;
@@ -30,13 +30,13 @@ public class Restaurant {
         this.latitude = latitude;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
+//    public String getId() {
+//        return id;
+//    }
+//
+//    public void setId(String id) {
+//        this.id = id;
+//    }
 
     public String getBusinessName() {
         return businessName;
@@ -113,8 +113,7 @@ public class Restaurant {
     @Override
     public String toString() {
         return "Restaurant{" +
-                "id='" + id + '\'' +
-                ", businessName='" + businessName + '\'' +
+                "businessName='" + businessName + '\'' +
                 ", addressLine1='" + addressLine1 + '\'' +
                 ", addressLine2='" + addressLine2 + '\'' +
                 ", addressLine3='" + addressLine3 + '\'' +
