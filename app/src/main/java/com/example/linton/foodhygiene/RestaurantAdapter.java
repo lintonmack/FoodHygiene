@@ -1,6 +1,8 @@
 package com.example.linton.foodhygiene;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -33,6 +36,7 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
         TextView tvAdd2 = (TextView) convertView.findViewById(R.id.addressLine2);
         TextView tvAdd3 = (TextView) convertView.findViewById(R.id.addressLine3);
         TextView tvpCode = (TextView) convertView.findViewById(R.id.postCode);
+        ImageView hygRating = (ImageView) convertView.findViewById(R.id.hygieneRating);
 
 
         tvBName.setText(restaurant.businessName);
@@ -40,10 +44,13 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
         tvAdd2.setText(restaurant.addressLine2);
         tvAdd3.setText(restaurant.addressLine3);
         tvpCode.setText(restaurant.postCode);
+        hygRating.setImageResource(restaurant.getHygRatingImageDrawable());
 
 
 
         return convertView;
     }
+
+
 
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/tableLay"
@@ -7,55 +7,65 @@
     android:layout_height="match_parent"
     tools:context="com.example.linton.foodhygiene.PostcodeSearch">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="44dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Search by Postcode"
-        android:textAlignment="textStart"
-        app:layout_constraintEnd_toStartOf="@+id/restSearch"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/restSearch"
-        android:layout_width="197dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
-        android:id="@+id/button"
-        android:layout_width="88dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:id="@+id/button2"
+        android:layout_width="181dp"
+        android:layout_height="48dp"
+        android:layout_alignEnd="@+id/restSearch"
+        android:layout_below="@+id/restSearch"
         android:layout_marginTop="8dp"
         android:onClick="getResults"
         android:text="SEARCH"
         app:layout_constraintBottom_toTopOf="@+id/listView"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/radioGroup"
+        android:layout_width="137dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/bNameSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/radioGroup"
+            android:layout_alignStart="@+id/radioGroup"
+            android:layout_weight="1"
+            android:onClick="onRadioButtonClicked"
+            android:text="Business Name" />
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/restSearch"
+        android:layout_width="197dp"
+        android:layout_height="46dp"
+        android:layout_alignTop="@+id/radioGroup"
+        android:layout_marginStart="9dp"
+        android:layout_toEndOf="@+id/radioGroup"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/restSearch" />
+        app:layout_constraintStart_toEndOf="@+id/radioGroup"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
         android:id="@+id/listView"
         android:layout_width="344dp"
         android:layout_height="385dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_alignStart="@+id/pCodeSearch"
+        android:layout_below="@+id/button2" />
 
-</android.support.constraint.ConstraintLayout>
+    <RadioButton
+        android:id="@+id/pCodeSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/radioGroup"
+        android:layout_below="@+id/restSearch"
+        android:onClick="onRadioButtonClicked"
+        android:text="Post Code" />
+
+</RelativeLayout>

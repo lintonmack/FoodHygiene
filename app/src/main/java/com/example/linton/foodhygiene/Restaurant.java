@@ -1,10 +1,14 @@
 package com.example.linton.foodhygiene;
 
+import android.widget.ImageView;
+
+import java.io.Serializable;
+
 /**
  * Created by linton on 21/02/2018.
  */
 
-public class Restaurant {
+public class Restaurant implements Serializable{
 
 //    public String id;
     public String businessName;
@@ -79,8 +83,34 @@ public class Restaurant {
     }
 
     public String getRatingValue() {
+
         return ratingValue;
     }
+
+    public int getHygRatingImageDrawable(){
+        int hygRating = R.drawable.hygrating0;
+
+        if(ratingValue.equals("0")){
+            hygRating = R.drawable.hygrating0;
+        }
+        else if(ratingValue.equals("1")){
+            hygRating = R.drawable.hygrating1;
+        }
+        else if(ratingValue.equals("2")){
+            hygRating = R.drawable.hygrating2;
+        }
+        else if(ratingValue.equals("3")){
+            hygRating = R.drawable.hygrating3;
+        }
+        else if(ratingValue.equals("4")){
+            hygRating = R.drawable.hygrating4;
+        }
+        else if(ratingValue.equals("5")){
+            hygRating = R.drawable.hygrating5;
+        }
+        return hygRating;
+    }
+
 
     public void setRatingValue(String ratingValue) {
         this.ratingValue = ratingValue;

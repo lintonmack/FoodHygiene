@@ -10,6 +10,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -30,12 +31,13 @@ import java.util.List;
 
 public class PostcodeSearch extends AppCompatActivity {
 
-    private TableLayout tableLayout;
     EditText restSearch;
     ListView listView;
-    Restaurant[] mRestaurants;
-    static ArrayAdapter<Restaurant> arrayAdapter;
     static ArrayList<Restaurant> restaurantArrayList = new ArrayList<>();
+    String URL = "";
+    RadioButton bNameSearch;
+    RadioButton pCodeSearch;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,13 +46,32 @@ public class PostcodeSearch extends AppCompatActivity {
 //        textView = (TextView) findViewById(R.id.textView2);
         restSearch = (EditText) findViewById(R.id.restSearch);
         listView = (ListView) findViewById(R.id.listView);
+        bNameSearch = (RadioButton) findViewById(R.id.bNameSearch);
+        pCodeSearch = (RadioButton) findViewById(R.id.pCodeSearch);
 
+    }
+
+    public void onRadioButtonClicked(View view) {
+        boolean checked = ((RadioButton) view).isChecked();
+
+        switch(view.getId()) {
+            case R.id.bNameSearch:
+                if (checked)
+                    URL = "op=s_name&name=";
+                    pCodeSearch.setChecked(false);
+                    break;
+            case R.id.pCodeSearch:
+                if (checked)
+                    URL = "op=s_postcode&postcode=";
+                    bNameSearch.setChecked(false);
+                    break;
+        }
     }
 
     public void getResults(View view) {
         Log.i("restSearch", restSearch.getText().toString());
         GetRating task = new GetRating();
-        task.execute("http://sandbox.kriswelsh.com/hygieneapi/hygiene.php?op=s_postcode&postcode=" + restSearch.getText().toString());
+        task.execute("http://sandbox.kriswelsh.com/hygieneapi/hygiene.php?" + URL + restSearch.getText().toString());
     }
 
     public class GetRating extends AsyncTask<String, Void, String> {
@@ -86,7 +107,6 @@ public class PostcodeSearch extends AppCompatActivity {
             super.onPostExecute(result);
 
             try {
-//              JSONObject jsonObject = new JSONObject(result);
                 JSONArray jsonArray = new JSONArray(result);
                 JSONObject jsonObject;
                 for (int n = 0; n < jsonArray.length(); n++) {
@@ -102,18 +122,7 @@ public class PostcodeSearch extends AppCompatActivity {
                             (jsonObject.getString("Longitude")),
                             (jsonObject.getString("Latitude")));
                     restaurantArrayList.add(RestaurantObj);
-//                    mRestaurants[n] = RestaurantObj;
                 }
-
-//                RestaurantAdapter.addAll(restaurantArrayList);
-//                arrayAdapter = new RestaurantAdapter(PostcodeSearch.this, restaurantArrayList);
-//
-
-                //Working
-//                arrayAdapter = new ArrayAdapter<Restaurant>(PostcodeSearch.this, android.R.layout.simple_list_item_1, restaurantArrayList);
-//                listView.setAdapter(arrayAdapter);
-////                System.out.println("this ran");
-
 
                 RestaurantAdapter adapter = new RestaurantAdapter(PostcodeSearch.this, restaurantArrayList);
                 ListView listView = (ListView) findViewById(R.id.listView);
