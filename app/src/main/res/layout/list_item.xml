@@ -54,13 +54,23 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-        //ADD IMAGE HERE
-
         <ImageView
             android:id="@+id/hygieneRating"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/hygrating0" />
+            android:background="@drawable/exempt" />
+        <TextView
+            android:id="@+id/distanceKmLabel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Distance KM:"
+            />
+        <TextView
+            android:id="@+id/distanceKm"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Unavailable"
+            />
 
     </LinearLayout>
 

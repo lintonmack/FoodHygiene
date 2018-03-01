@@ -37,6 +37,8 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
         TextView tvAdd3 = (TextView) convertView.findViewById(R.id.addressLine3);
         TextView tvpCode = (TextView) convertView.findViewById(R.id.postCode);
         ImageView hygRating = (ImageView) convertView.findViewById(R.id.hygieneRating);
+        TextView distnceKMResult = (TextView) convertView.findViewById(R.id.distanceKm);
+        TextView distanceKMLabel = (TextView) convertView.findViewById(R.id.distanceKmLabel);
 
 
         tvBName.setText(restaurant.businessName);
@@ -44,6 +46,7 @@ public class RestaurantAdapter extends ArrayAdapter<Restaurant> {
         tvAdd2.setText(restaurant.addressLine2);
         tvAdd3.setText(restaurant.addressLine3);
         tvpCode.setText(restaurant.postCode);
+        distnceKMResult.setText(restaurant.distanceKM);
         hygRating.setImageResource(restaurant.getHygRatingImageDrawable());
 
 

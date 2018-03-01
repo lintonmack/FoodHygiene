@@ -20,8 +20,9 @@ public class Restaurant implements Serializable{
     String ratingDate;
     String longitude;
     String latitude;
+    String distanceKM;
 
-    public Restaurant(String businessName, String addressLine1, String addressLine2, String addressLine3, String postCode, String ratingValue, String ratingDate, String longitude, String latitude) {
+    public Restaurant(String businessName, String addressLine1, String addressLine2, String addressLine3, String postCode, String ratingValue, String ratingDate, String longitude, String latitude, String distanceKM) {
 //        this.id = id;
         this.businessName = businessName;
         this.addressLine1 = addressLine1;
@@ -32,15 +33,20 @@ public class Restaurant implements Serializable{
         this.ratingDate = ratingDate;
         this.longitude = longitude;
         this.latitude = latitude;
+        this.distanceKM = distanceKM;
     }
 
-//    public String getId() {
-//        return id;
-//    }
-//
-//    public void setId(String id) {
-//        this.id = id;
-//    }
+    public Restaurant(String businessName, String addressLine1, String addressLine2, String addressLine3, String postCode, String ratingValue, String ratingDate, String longitude, String latitude) {
+        this.businessName = businessName;
+        this.addressLine1 = addressLine1;
+        this.addressLine2 = addressLine2;
+        this.addressLine3 = addressLine3;
+        this.postCode = postCode;
+        this.ratingValue = ratingValue;
+        this.ratingDate = ratingDate;
+        this.longitude = longitude;
+        this.latitude = latitude;
+    }
 
     public String getBusinessName() {
         return businessName;
@@ -87,6 +93,15 @@ public class Restaurant implements Serializable{
         return ratingValue;
     }
 
+    public String getDistanceKM() {
+        return distanceKM;
+    }
+
+    public void setDistanceKM(String distanceKM) {
+        this.distanceKM = distanceKM;
+    }
+
+
     public int getHygRatingImageDrawable(){
         int hygRating = R.drawable.hygrating0;
 
@@ -107,6 +122,9 @@ public class Restaurant implements Serializable{
         }
         else if(ratingValue.equals("5")){
             hygRating = R.drawable.hygrating5;
+        }
+        else if(ratingValue.equals("-1")){
+            hygRating = R.drawable.exempt;
         }
         return hygRating;
     }
