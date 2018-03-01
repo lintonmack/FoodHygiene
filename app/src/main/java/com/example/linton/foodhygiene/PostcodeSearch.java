@@ -45,7 +45,7 @@ public class PostcodeSearch extends AppCompatActivity {
     EditText restSearch;
     ListView listView;
     static ArrayList<Restaurant> restaurantArrayList = new ArrayList<>();
-    public static RadioButton bNameSearch, pCodeSearch, gpsSearch, recentEntries;
+    public static RadioButton bNameSearch, pCodeSearch, gpsSearch;
     LocationManager locationManager;
     LocationListener locationListener;
     Double lat = 0.00, lng = 0.00;
@@ -72,7 +72,7 @@ public class PostcodeSearch extends AppCompatActivity {
         bNameSearch = (RadioButton) findViewById(R.id.bNameSearch);
         pCodeSearch = (RadioButton) findViewById(R.id.pCodeSearch);
         gpsSearch = (RadioButton) findViewById(R.id.gpsSearch);
-        recentEntries = (RadioButton) findViewById(R.id.recentEntries);
+//        recentEntries = (RadioButton) findViewById(R.id.recentEntries);
 
 
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -121,14 +121,12 @@ public class PostcodeSearch extends AppCompatActivity {
                 if (checked)
                     pCodeSearch.setChecked(false);
                 gpsSearch.setChecked(false);
-                recentEntries.setChecked(false);
                 indexVal = 1;
                 break;
             case R.id.pCodeSearch:
                 if (checked)
                     bNameSearch.setChecked(false);
                 gpsSearch.setChecked(false);
-                recentEntries.setChecked(false);
                 indexVal = 2;
                 break;
             case R.id.gpsSearch:
@@ -137,21 +135,16 @@ public class PostcodeSearch extends AppCompatActivity {
                 latS = lat.toString();
                 bNameSearch.setChecked(false);
                 pCodeSearch.setChecked(false);
-                recentEntries.setChecked(false);
                 indexVal = 3;
-                break;
-            case R.id.recentEntries:
-                if (checked)
-                    bNameSearch.setChecked(false);
-                pCodeSearch.setChecked(false);
-                gpsSearch.setChecked(false);
-                indexVal = 4;
                 break;
         }
     }
 
     public void getResults(View view) {
 //        Log.i("restSearch", restSearch.getText().toString());
+        if (restaurantArrayList != null){
+            restaurantArrayList.clear();
+        }
         GetRating task = new GetRating();
         if (indexVal == 1) {
             task.execute("http://sandbox.kriswelsh.com/hygieneapi/hygiene.php?op=s_name&name=" + restSearch.getText().toString());
@@ -159,9 +152,18 @@ public class PostcodeSearch extends AppCompatActivity {
             task.execute("http://sandbox.kriswelsh.com/hygieneapi/hygiene.php?op=s_postcode&postcode=" + restSearch.getText().toString());
         } else if (indexVal == 3) {
             task.execute("http://sandbox.kriswelsh.com/hygieneapi/hygiene.php?op=s_loc&lat=" + latS + "&long=" + lngS);
-        } else if (indexVal == 4) {
-            task.execute("http://sandbox.kriswelsh.com/hygieneapi/hygiene.php?op=s_recent");
         }
+    }
+
+    public void getRecentlyAdded(View view) {
+        bNameSearch.setChecked(false);
+        pCodeSearch.setChecked(false);
+        gpsSearch.setChecked(false);
+        if (restaurantArrayList != null){
+            restaurantArrayList.clear();
+        }
+        GetRating task = new GetRating();
+        task.execute("http://sandbox.kriswelsh.com/hygieneapi/hygiene.php?op=s_recent");
     }
 
     public class GetRating extends AsyncTask<String, Void, String> {

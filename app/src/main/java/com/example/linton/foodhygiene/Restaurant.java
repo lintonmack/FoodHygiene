@@ -103,9 +103,12 @@ public class Restaurant implements Serializable{
 
 
     public int getHygRatingImageDrawable(){
-        int hygRating = R.drawable.hygrating0;
+        int hygRating = R.drawable.exemptimg;
 
-        if(ratingValue.equals("0")){
+        if(ratingValue.equals("-1")){
+            hygRating = R.drawable.exemptimg;
+        }
+        else if(ratingValue.equals("0")){
             hygRating = R.drawable.hygrating0;
         }
         else if(ratingValue.equals("1")){
@@ -122,9 +125,6 @@ public class Restaurant implements Serializable{
         }
         else if(ratingValue.equals("5")){
             hygRating = R.drawable.hygrating5;
-        }
-        else if(ratingValue.equals("-1")){
-            hygRating = R.drawable.exempt;
         }
         return hygRating;
     }

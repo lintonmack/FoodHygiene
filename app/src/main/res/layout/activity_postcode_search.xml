@@ -80,14 +80,6 @@
         android:onClick="onRadioButtonClicked"
         android:text="GPS" />
 
-    <RadioButton
-        android:id="@+id/recentEntries"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/listView"
-        android:layout_below="@+id/button2"
-        android:text="Recent Entries" />
-
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
@@ -96,5 +88,14 @@
         android:layout_alignStart="@+id/button2"
         android:layout_below="@+id/gpsSearch"
         android:text="View Map" />
+
+    <Button
+        android:id="@+id/recentlyAdded"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/gpsSearch"
+        android:layout_toStartOf="@+id/button2"
+        android:text="Recently Added"
+        android:onClick="getRecentlyAdded"/>
 
 </RelativeLayout>

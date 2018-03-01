@@ -57,8 +57,7 @@
         <ImageView
             android:id="@+id/hygieneRating"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/exempt" />
+            android:layout_height="match_parent" />
         <TextView
             android:id="@+id/distanceKmLabel"
             android:layout_width="match_parent"
